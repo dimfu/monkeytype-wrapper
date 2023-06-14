@@ -1,1 +1,3 @@
-export const foo = 'foo'
+import MonkeyWrapper from './MonkeyWrapper'
+
+export default MonkeyWrapper
