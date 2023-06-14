@@ -19,14 +19,20 @@ interface UserPersonalBestsCustom {
   custom?: PersonalBestProperties[]
 }
 
+export interface UserStats {
+  startedTests: number
+  completedTests: number
+  timeTyping: number
+}
 export type UserPersonalBests = UserPersonalBestsMapped & UserPersonalBestsCustom
 
 export function users(this: { request(endpoint: string): Promise<any> }) {
   return {
-    personalBests: (mode: 'time' | 'words' | 'quote' | 'zen' | 'custom') => this.request(`/users/personalBests?mode=${mode}`).then((res) => {
-      if (!res)
+    personalBests: (mode: 'time' | 'words' | 'quote' | 'zen' | 'custom') => this.request(`/users/personalBests?mode=${mode}`).then(({ data }: { data: UserPersonalBests }) => {
+      if (!data)
         return undefined
-      return res.data as UserPersonalBests
+      return data
     }),
+    stats: () => this.request('/users/stats').then(({ data }: { data: UserStats }) => data),
   }
 }
