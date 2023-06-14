@@ -1,38 +1,13 @@
-type PersonalBestTime = '15' | '30' | '50' | '60'
-interface PersonalBestProperties {
-  difficulty: string
-  acc: number
-  raw: number
-  language: string
-  consistency: number
-  timestamp: number
-  wpm: number
-  punctuation: boolean
-  lazyMode?: boolean
-}
+import type { UserPersonalBests, UserProfile, UserStats } from './types'
 
-type UserPersonalBestsMapped = {
-  [key in PersonalBestTime]?: PersonalBestProperties[];
-}
-
-interface UserPersonalBestsCustom {
-  custom?: PersonalBestProperties[]
-}
-
-export interface UserStats {
-  startedTests: number
-  completedTests: number
-  timeTyping: number
-}
-export type UserPersonalBests = UserPersonalBestsMapped & UserPersonalBestsCustom
-
-export function users(this: { request(endpoint: string): Promise<any> }) {
+export function users(this: { request<T>(endpoint: string): Promise<{ data: T }> }) {
   return {
-    personalBests: (mode: 'time' | 'words' | 'quote' | 'zen' | 'custom') => this.request(`/users/personalBests?mode=${mode}`).then(({ data }: { data: UserPersonalBests }) => {
+    personalBests: (mode: 'time' | 'words' | 'quote' | 'zen' | 'custom') => this.request<UserPersonalBests>(`/users/personalBests?mode=${mode}`).then(({ data }) => {
       if (!data)
         return undefined
       return data
     }),
-    stats: () => this.request('/users/stats').then(({ data }: { data: UserStats }) => data),
+    stats: () => this.request<UserStats>('/users/stats').then(({ data }) => data),
+    profile: (uid: string) => this.request<UserProfile>(`/users/${uid}/profile`).then(({ data }) => data),
   }
 }
