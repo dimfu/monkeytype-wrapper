@@ -1,11 +1,11 @@
-import { users } from './api'
-import { leaderboards } from './api/leaderboards'
+import { leaderboards, results, users } from './api'
 import Requests from './private/Requests'
 
 export default class MonkeyWrapper {
   public requests: Requests
   private _users
   private _leaderboards
+  private _results
 
   constructor(public apeKey: string) {
     if (!this.apeKey)
@@ -14,6 +14,7 @@ export default class MonkeyWrapper {
     this.requests = new Requests(this.apeKey)
     this._users = users(this.requests)
     this._leaderboards = leaderboards(this.requests)
+    this._results = results(this.requests)
   }
 
   get users() {
@@ -22,5 +23,9 @@ export default class MonkeyWrapper {
 
   get leaderboards() {
     return this._leaderboards
+  }
+
+  get results() {
+    return this._results
   }
 }

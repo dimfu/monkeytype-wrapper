@@ -1,15 +1,14 @@
 import { errors } from '../errors'
 
-const BASE_URL = 'https://api.monkeytype.com'
-
 export default class Requests {
   public apeKey: string
+  private static url = 'https://api.monkeytype.com'
   constructor(apeKey: string) {
     this.apeKey = apeKey
   }
 
   public async makeRequest<T>(endpoint: string): Promise<T> {
-    const response = await fetch(`${BASE_URL}${endpoint}`, {
+    const response = await fetch(`${Requests.url}${endpoint}`, {
       headers: {
         Authorization: `ApeKey ${this.apeKey}`,
       },
@@ -19,7 +18,7 @@ export default class Requests {
     if (response.status === 471)
       throw new Error(errors.INACTIVE_API_KEY)
 
-    if (response.status === 479)
+    if (response.status === 479 || response.status === 429)
       throw new Error(errors.RATE_LIMITED)
 
     if (response.status === 472)

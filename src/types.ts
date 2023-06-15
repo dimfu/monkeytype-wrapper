@@ -88,3 +88,31 @@ export interface LeaderboardParams {
 }
 
 export type LeaderboardParamsSubset = Pick<LeaderboardParams, 'language' | 'mode' | 'keyTime'>
+
+export interface TypingResult {
+  _id: string
+  wpm: number
+  rawWpm: number
+  charStats: number[]
+  acc: number
+  mode: string
+  mode2: string
+  timestamp: number
+  consistency: number
+  keyConsistency: number
+  chartData: {
+    wpm: number[]
+    raw: number[]
+    err: number[]
+  }
+  testDuration: number
+  keySpacingStats: {
+    average: number
+    sd: number
+  }
+  keyDurationStats: {
+    average: number
+    sd: number
+  }
+  name: string
+}
