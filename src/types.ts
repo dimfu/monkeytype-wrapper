@@ -1,4 +1,5 @@
-type PersonalBestTime = '10' | '15' | '25' | '30' | '50' | '60' | '100'
+export type GameMode = 'time' | 'words' | 'quote' | 'zen' | 'custom'
+export type GameTime = '10' | '15' | '25' | '30' | '50' | '60' | '100'
 
 interface PersonalBestProperties {
   difficulty: string
@@ -13,11 +14,11 @@ interface PersonalBestProperties {
 }
 
 type UserPersonalBestsMapped = {
-  [key in PersonalBestTime]?: PersonalBestProperties[];
+  [key in GameTime]?: PersonalBestProperties[];
 }
 
 type UserProfileMapped = {
-  [key in PersonalBestTime]?: {
+  [key in GameTime]?: {
     [key: string]: string
   }
 }
@@ -62,3 +63,26 @@ export interface UserProfile {
 }
 
 export type UserPersonalBests = UserPersonalBestsMapped & UserPersonalBestsCustom
+
+export interface LeaderBoardUserProfile {
+  raw: number
+  timestamp: number
+  punctuation: boolean
+  wpm: number
+  acc: number
+  consistency: number
+  lazyMode: boolean
+  uid: string
+  name: string
+  discordId: string
+  discordAvatar: string
+  rank: number
+}
+
+export interface GlobalRank {
+  language: string
+  mode: GameMode
+  keyTime: GameTime
+  skip?: number | undefined
+  limit?: number | undefined
+}
