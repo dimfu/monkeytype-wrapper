@@ -11,7 +11,7 @@ npm install --save monkeytype-wrapper
 ```js
 import MonkeyWrapper from 'monkeytype-wrapper'
 
-const monkey = new MonkeyWrapper(key)
+const monkey = new MonkeyWrapper('YOUR_APE_KEY')
 
 // Using methods
 monkey.users.profile('John Doe').then((res) => {

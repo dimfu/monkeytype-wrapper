@@ -79,10 +79,12 @@ export interface LeaderBoardUserProfile {
   rank: number
 }
 
-export interface GlobalRank {
+export interface LeaderboardParams {
   language: string
   mode: GameMode
   keyTime: GameTime
   skip?: number | undefined
   limit?: number | undefined
 }
+
+export type LeaderboardParamsSubset = Pick<LeaderboardParams, 'language' | 'mode' | 'keyTime'>
